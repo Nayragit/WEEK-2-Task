@@ -3,7 +3,7 @@ const sectionData = {
     blocks: [
         {
             type: "slide",
-            preHeading: "Gold Luxury",
+            preHeading: "Gold Luxury,",
             heading: "Exquisite Watches",
             imageUrl: "/image/Watches.png",
             description: `Discover the Perfect Watch for Every Occasion 
@@ -13,11 +13,11 @@ const sectionData = {
             buttonLink: "#",
             contentAlign: "left-start",
             textAlign: "left",
-            "backgroundColor":{from:"#fac291",to:'fac291'},
+            bgColor: "#F6B174"
         },
         {
             type: "slide",
-            preHeading: "Silver Luxury",
+            preHeading: "Silver Luxury,",
             heading: "Dainty Timepieces",
             imageUrl: "/image/Group 5.png",
             description: `Explore the Ideal Timepiece for Any Moment 
@@ -27,12 +27,11 @@ const sectionData = {
             buttonLink: "#",
             contentAlign: "left-start",
             textAlign: "left",
-            "backgroundColor":{from:"#fac291",to:'#d1d1d1'}
-},
-
+            bgColor: "#B2B5B5"
+        },
         {
             type: "slide",
-            preHeading: "Elegant Style",
+            preHeading: "Elegant Style,",
             heading: "Elegant Timepieces",
             imageUrl: "/image/Group 6.png",
             description: `Discover the Perfect Watch for Every Occasion 
@@ -42,13 +41,11 @@ const sectionData = {
             buttonLink: "#",
             contentAlign: "left-start",
             textAlign: "left",
-            "backgroundColor":{from:"#fac291",to:'#d1d1d1'}
-
-
+            bgColor: "#41B165"
         },
         {
             type: "slide",
-            preHeading: "Luxury Redefined",
+            preHeading: "Luxury Redefined,",
             heading: "Refined Timepieces",
             imageUrl: "/image/Group 7.png",
             description: `Discover the Perfect Watch for Every Occasion 
@@ -58,47 +55,45 @@ const sectionData = {
             buttonLink: "#",
             contentAlign: "left-start",
             textAlign: "left",
-            "backgroundColor":{from:"#fac291",to:'#63d489'}
-
+            bgColor: "#F55956"
         },
     ],
-};
-
-document.addEventListener("DOMContentLoaded", function () {
-    const splideList = document.querySelector(".splide__list");
-
-    sectionData.blocks.forEach((block) => {
-        const slide = document.createElement("li");
-        slide.classList.add("splide__slide");
-
-        slide.innerHTML = `
-            <div class="container">
-                <div class="left-container" style="text-align: ${block.textAlign};">
-                    <h1>${block.heading}</h1>
-                    <h2>${block.preHeading}, <span>Choose Us</span></h2>
-                    <p>${block.description}</p>
-                    <h1>${block.price}</h1>
-                    <img src="Frame 6.png" alt="dtrfghj">
-                </div>
-                <div class="right-container">
-                    <img src="${block.imageUrl}" alt="${block.heading}">
-                </div>
-            </div>
-        `;
-
-        splideList.appendChild(slide);
-    });
-
-    var splide = new Splide(".splide", {
-        type: "fade",
+  };
+  
+  const productTitle = document.getElementById("product-title");
+  const productTitle2 = document.getElementById("product-title-2");
+  const description = document.getElementById("description");
+  const price = document.getElementById("price");
+  const body = document.querySelector("body");
+  
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    const slideList = document.querySelector(".splide__list");
+    sectionData.blocks.forEach(data => {
+      const slide = document.createElement("li");
+      slide.classList.add("splide__slide");
+      slide.innerHTML = `<img src="${data.imageUrl}" alt="image1">`
+      slideList.appendChild(slide);
+    })
+    
+    var splide = new Splide('.splide', {
+        type: 'loop',
         perPage: sectionData.perPage,
-        interval: 3000,
-        pauseOnHover: true,
-        speed: 800,
-        arrows: true,
-        pagination: true,
+        pagination: false
     });
     splide.mount();
-});
+  
+    splide.on("move", (index) => {    
+      updateContent(sectionData.blocks[index]);
+    });
+  });
+  
+  const updateContent = data => {
+    productTitle.innerHTML = data.heading;
+    productTitle2.innerHTML = data.preHeading;
+    description.innerHTML = data.description;
+    price.innerHTML = data.price;
+    body.style.backgroundColor = data.bgColor;
+  }
 
 
